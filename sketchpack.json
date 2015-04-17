@@ -1,0 +1,5 @@
+{
+    "name": "Personas",
+    "description": "Allows for consistent user of personas across mocks",
+    "tags": ["generator", "personas", "ux"]
+}

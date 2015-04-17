@@ -1,0 +1,73 @@
+var selection = context.selection;
+
+if([selection count] == 0){
+	return log('nothing selected');
+}
+
+var user = getUser();
+
+for (var i=0; i < [selection count]; i++) {
+	var layer = selection[i];
+
+	if(layer.className() == 'MSShapeGroup') {
+		setImage(layer);
+	} else  {
+		setText(layer);
+	}
+
+}
+
+function getUser() {
+	var request = [[NSMutableURLRequest alloc] init];
+	[request setHTTPMethod:@"GET"];
+	var queryString = "http://api.randomuser.me";
+	[request setURL:[NSURL URLWithString:queryString]];
+
+	var error = [[NSError alloc] init];
+	var responseCode = null;
+
+	var oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:responseCode error:error];
+
+	var dataString = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+
+	var data = JSON.parse(dataString);
+
+	return data.results[0].user;
+
+}
+
+function setImage(layer) {
+	var name = [layer name];
+
+	if(name == 'large' || name == 'thumbnail') {
+		size = name
+	} else { 
+		size = 'medium'
+	}
+
+	var imageURLString = user.picture[size];
+	var url = [[NSURL alloc] initWithString: imageURLString];
+	var image = [[NSImage alloc] initByReferencingURL:url];
+	var fill = layer.style().fills().firstObject();
+
+	layer.style().fills().firstObject().setPatternImage(image);   
+	layer.style().fills().firstObject().setPatternFillType(1);
+	fill.setFillType(4); 
+}
+
+function setText(layer) {
+	var name = [layer name];
+	var text;
+
+	if(name == 'name') {
+		text = user.name.first + ' ' + user.name.last;
+	} else if (name == 'location') {
+		text = user.location.city + ', ' + user.location.state;
+	} else {
+		text = user[[layer name]];
+	}
+
+	[layer setStringValue: text];
+	[layer setName: [layer name]];
+	[layer adjustFrameToFit];
+}
