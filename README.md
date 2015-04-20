@@ -1,6 +1,8 @@
 # Personas for Sketch
 Bringing user personas into Sketch
 
+![](http://s15.postimg.org/r0h9jqt5n/personas.gif)
+
 ## Usage
 Select layers and run the plugin to generate content.
 
