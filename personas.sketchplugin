@@ -61,8 +61,10 @@ function setText(layer) {
 
 	if(name == 'name') {
 		text = user.name.first + ' ' + user.name.last;
+		text = capitalize(text);
 	} else if (name == 'location') {
 		text = user.location.city + ', ' + user.location.state;
+		text = capitalize(text);
 	} else {
 		text = user[[layer name]];
 	}
@@ -71,3 +73,7 @@ function setText(layer) {
 	[layer setName: [layer name]];
 	[layer adjustFrameToFit];
 }
+
+function capitalize(s){
+    return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
+};
