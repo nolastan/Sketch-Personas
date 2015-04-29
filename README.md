@@ -2,9 +2,10 @@
 Bringing user personas into Sketch
 
 ![](http://s15.postimg.org/r0h9jqt5n/personas.gif)
+![](http://i.imgur.com/OUgrYmp.gif)
 
 ## Usage
-Select layers and run the plugin to generate content.
+Select layers or groups and run the plugin to generate content.
 
 Name the layer one of the following to generate the corresponding content:
 - gender
