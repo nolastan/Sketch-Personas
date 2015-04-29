@@ -1,7 +1,14 @@
 var selection = context.selection;
 
+// if nothing selected, display error
 if([selection count] == 0){
 	return log('nothing selected');
+}
+
+// if group selected, get children
+if(selection[0].className() == 'MSLayerGroup') {
+	group = selection[0];
+	selection = [group layers].array();
 }
 
 var user = getUser();
