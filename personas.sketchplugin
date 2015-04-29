@@ -5,29 +5,44 @@ if([selection count] == 0){
 	return log('nothing selected');
 }
 
-// if group selected, get children
+// if group selected, iterate through them
 if(selection[0].className() == 'MSLayerGroup') {
-	group = selection[0];
-	selection = [group layers].array();
+	updateGroups(selection);
+} else {
+	updateLayers(selection, getUser());
 }
 
-var user = getUser();
+function updateGroups(groups) {
+	var users = getUsers(groups.count());
+	for (var i=0; i < groups.count(); i++) {
+		var group = groups[i];
+		var user = users[i].user;
+		updateLayers([group layers].array(), user);	
+	}
+}
 
-for (var i=0; i < [selection count]; i++) {
-	var layer = selection[i];
+function updateLayers(layers, user) {
 
-	if(layer.className() == 'MSShapeGroup') {
-		setImage(layer);
-	} else  {
-		setText(layer);
+	for (var i=0; i < layers.count(); i++) {
+		var layer = layers[i];
+
+		if(layer.className() == 'MSShapeGroup') {
+			setImage(layer, user);
+		} else  {
+			setText(layer, user);
+		}
 	}
 
 }
 
 function getUser() {
+	return getUsers(1)[0].user;
+}
+
+function getUsers(count) {
 	var request = [[NSMutableURLRequest alloc] init];
 	[request setHTTPMethod:@"GET"];
-	var queryString = "http://api.randomuser.me";
+	var queryString = "http://api.randomuser.me?results=" + count;
 	[request setURL:[NSURL URLWithString:queryString]];
 
 	var error = [[NSError alloc] init];
@@ -39,11 +54,11 @@ function getUser() {
 
 	var data = JSON.parse(dataString);
 
-	return data.results[0].user;
+	return data.results;
 
 }
 
-function setImage(layer) {
+function setImage(layer, user) {
 	var name = [layer name];
 
 	if(name == 'large' || name == 'thumbnail') {
@@ -62,7 +77,7 @@ function setImage(layer) {
 	fill.setFillType(4); 
 }
 
-function setText(layer) {
+function setText(layer, user) {
 	var name = [layer name];
 	var text;
 
