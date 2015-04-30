@@ -4,6 +4,9 @@ Bringing user personas into Sketch
 ![](http://s15.postimg.org/r0h9jqt5n/personas.gif)
 ![](http://i.imgur.com/OUgrYmp.gif)
 
+## Installation
+[Download](https://github.com/nolastan/Sketch-Personas/archive/master.zip) and open `personas.sketchplugin`. Now open Sketch to find "personas" in the Plugins menu.
+
 ## Usage
 Select layers or groups and run the plugin to generate content.
 
