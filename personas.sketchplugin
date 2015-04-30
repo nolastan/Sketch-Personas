@@ -1,15 +1,12 @@
-var selection = context.selection;
-
 // if nothing selected, display error
-if([selection count] == 0){
+if (context.selection.count() == 0) {
 	return log('nothing selected');
 }
 
-// if group selected, iterate through them
-if(selection[0].className() == 'MSLayerGroup') {
-	updateGroups(selection);
+if (isGroupSelected()) {
+	updateGroups(context.selection);
 } else {
-	updateLayers(selection, getUser());
+	updateLayers(context.selection, getUser());
 }
 
 function updateGroups(groups) {
@@ -17,16 +14,15 @@ function updateGroups(groups) {
 	for (var i=0; i < groups.count(); i++) {
 		var group = groups[i];
 		var user = users[i].user;
-		updateLayers([group layers].array(), user);	
+		updateLayers(group.layers().array(), user);	
 	}
 }
 
 function updateLayers(layers, user) {
-
+  
 	for (var i=0; i < layers.count(); i++) {
 		var layer = layers[i];
-
-		if(layer.className() == 'MSShapeGroup') {
+		if (layer.className() == 'MSShapeGroup') {
 			setImage(layer, user);
 		} else  {
 			setText(layer, user);
@@ -40,12 +36,12 @@ function getUser() {
 }
 
 function getUsers(count) {
-	var request = [[NSMutableURLRequest alloc] init];
+	var request = NSMutableURLRequest.new();
 	[request setHTTPMethod:@"GET"];
 	var queryString = "http://api.randomuser.me?results=" + count;
 	[request setURL:[NSURL URLWithString:queryString]];
 
-	var error = [[NSError alloc] init];
+	var error = NSError.new();
 	var responseCode = null;
 
 	var oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:responseCode error:error];
@@ -59,9 +55,10 @@ function getUsers(count) {
 }
 
 function setImage(layer, user) {
-	var name = [layer name];
 
-	if(name == 'large' || name == 'thumbnail') {
+	var name = layer.name();
+
+	if (name == 'large' || name == 'thumbnail') {
 		size = name
 	} else { 
 		size = 'medium'
@@ -73,29 +70,34 @@ function setImage(layer, user) {
 	var fill = layer.style().fills().firstObject();
 
 	layer.style().fills().firstObject().setPatternImage(image);   
-	layer.style().fills().firstObject().setPatternFillType(1);
-	fill.setFillType(4); 
+	layer.style().fills().firstObject().setPatternFillType(1); // image
+	fill.setFillType(4); // fill
 }
 
 function setText(layer, user) {
-	var name = [layer name];
+	var name = layer.name();
 	var text;
 
-	if(name == 'name') {
+	if (name == 'name') {
 		text = user.name.first + ' ' + user.name.last;
 		text = capitalize(text);
 	} else if (name == 'location') {
 		text = user.location.city + ', ' + user.location.state;
 		text = capitalize(text);
 	} else {
-		text = user[[layer name]];
+		text = user[name];
 	}
 
-	[layer setStringValue: text];
-	[layer setName: [layer name]];
-	[layer adjustFrameToFit];
+	// update display hack
+	layer.stringValue = text;
+	layer.name = name; 
+	layer.adjustFrameToFit();
 }
 
 function capitalize(s){
-    return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
-};
+  return s.toLowerCase().replace( /\b./g, function(a) { return a.toUpperCase(); } );
+}
+
+function isGroupSelected() {
+	return context.selection.firstObject().className() == 'MSLayerGroup';
+}
