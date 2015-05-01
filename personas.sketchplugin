@@ -1,6 +1,9 @@
-// if nothing selected, display error
-if (context.selection.count() == 0) {
-	return log('nothing selected');
+const PATTERN_FILL_IMAGE = 1;
+const FILL_TYPE_FILL = 4;
+
+if (isNothingSelected) {
+  var app = NSApplication.sharedApplication();
+  return [app displayDialog:"Please select at least one layer or group." withTitle:"Nothing Selected"];
 }
 
 if (isGroupSelected()) {
@@ -70,8 +73,8 @@ function setImage(layer, user) {
 	var fill = layer.style().fills().firstObject();
 
 	layer.style().fills().firstObject().setPatternImage(image);   
-	layer.style().fills().firstObject().setPatternFillType(1); // image
-	fill.setFillType(4); // fill
+	layer.style().fills().firstObject().setPatternFillType(PATTERN_FILL_IMAGE);
+	fill.setFillType(FILL_TYPE_FILL);
 }
 
 function setText(layer, user) {
@@ -88,9 +91,12 @@ function setText(layer, user) {
 		text = user[name];
 	}
 
-	// update display hack
 	layer.stringValue = text;
-	layer.name = name; 
+	updateDisplayHack(layer);
+}
+
+function updateDisplayHack(layer) {
+	layer.name = layer.name(); 
 	layer.adjustFrameToFit();
 }
 
@@ -100,4 +106,8 @@ function capitalize(s){
 
 function isGroupSelected() {
 	return context.selection.firstObject().className() == 'MSLayerGroup';
+}
+
+function isNothingSelected() {
+	context.selection.count() == 0;
 }
