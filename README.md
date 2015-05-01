@@ -5,7 +5,9 @@ Bringing user personas into Sketch
 ![](http://i.imgur.com/OUgrYmp.gif)
 
 ## Installation
-[Download](https://github.com/nolastan/Sketch-Personas/archive/master.zip) and open `personas.sketchplugin`. Now open Sketch to find "personas" in the Plugins menu.
+Recommended: Use [Sketch Toolbox](http://sketchtoolbox.com/) to keep Personas up-to-date.
+
+Alternatively, [download](https://github.com/nolastan/Sketch-Personas/archive/master.zip) and open `personas.sketchplugin`. Now open Sketch to find "personas" in the Plugins menu.
 
 ## Usage
 Select layers or groups and run the plugin to generate content.
