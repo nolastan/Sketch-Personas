@@ -1,7 +1,7 @@
 const PATTERN_FILL_IMAGE = 1;
 const FILL_TYPE_FILL = 4;
 
-if (isNothingSelected) {
+if (isNothingSelected()) {
   var app = NSApplication.sharedApplication();
   return [app displayDialog:"Please select at least one layer or group." withTitle:"Nothing Selected"];
 }
@@ -109,5 +109,5 @@ function isGroupSelected() {
 }
 
 function isNothingSelected() {
-	context.selection.count() == 0;
+	return context.selection.count() == 0;
 }
