@@ -1,18 +1,24 @@
 # Personas for Sketch
 Bringing user personas into Sketch
 
-![](http://s15.postimg.org/r0h9jqt5n/personas.gif)
-![](http://i.imgur.com/OUgrYmp.gif)
-
 ## Installation
 Recommended: Use [Sketch Toolbox](http://sketchtoolbox.com/) to keep Personas up-to-date.
 
 Alternatively, [download](https://github.com/nolastan/Sketch-Personas/archive/master.zip) and open `personas.sketchplugin`. Now open Sketch to find "personas" in the Plugins menu.
 
 ## Usage
-Select layers or groups and run the plugin to generate content.
+Select shapes and named text layers to generate a persona:
 
-Name the layer one of the following to generate the corresponding content:
+![](http://s15.postimg.org/r0h9jqt5n/personas.gif)
+
+Select groups to generate multiple personas:
+
+![](http://i.imgur.com/OUgrYmp.gif)
+
+## Supported Layer Names
+Data comes from [RandomAPI](https://randomuser.me/).
+
+The following layer names are supported:
 - gender
 - name
 - location
