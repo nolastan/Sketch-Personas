@@ -87,6 +87,10 @@ function setText(layer, user) {
 	} else if (name == 'location') {
 		text = user.location.city + ', ' + user.location.state;
 		text = capitalize(text);
+	} else if (name == 'dob') {
+		unix_time = user.dob;
+		date = new Date(unix_time * 1000);
+		text = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
 	} else {
 		text = user[name];
 	}
