@@ -17,12 +17,12 @@ function updateGroups(groups) {
 	for (var i=0; i < groups.count(); i++) {
 		var group = groups[i];
 		var user = users[i].user;
-		updateLayers(group.layers().array(), user);	
+		updateLayers(group.layers().array(), user);
 	}
 }
 
 function updateLayers(layers, user) {
-  
+
 	for (var i=0; i < layers.count(); i++) {
 		var layer = layers[i];
 		if (layer.className() == 'MSShapeGroup') {
@@ -41,7 +41,7 @@ function getUser() {
 function getUsers(count) {
 	var request = NSMutableURLRequest.new();
 	[request setHTTPMethod:@"GET"];
-	var queryString = "http://api.randomuser.me?results=" + count;
+	var queryString = "http://api.randomuser.me?nat=us&results=" + count;
 	[request setURL:[NSURL URLWithString:queryString]];
 
 	var error = NSError.new();
@@ -63,7 +63,7 @@ function setImage(layer, user) {
 
 	if (name == 'large' || name == 'thumbnail') {
 		size = name
-	} else { 
+	} else {
 		size = 'medium'
 	}
 
@@ -72,7 +72,7 @@ function setImage(layer, user) {
 	var image = [[NSImage alloc] initByReferencingURL:url];
 	var fill = layer.style().fills().firstObject();
 
-	layer.style().fills().firstObject().setPatternImage(image);   
+	layer.style().fills().firstObject().setPatternImage(image);
 	layer.style().fills().firstObject().setPatternFillType(PATTERN_FILL_IMAGE);
 	fill.setFillType(FILL_TYPE_FILL);
 }
@@ -87,6 +87,10 @@ function setText(layer, user) {
 	} else if (name == 'location') {
 		text = user.location.city + ', ' + user.location.state;
 		text = capitalize(text);
+	} else if (name == 'dob') {
+		unix_time = user.dob;
+		date = new Date(unix_time * 1000);
+		text = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
 	} else {
 		text = user[name];
 	}
@@ -96,7 +100,7 @@ function setText(layer, user) {
 }
 
 function updateDisplayHack(layer) {
-	layer.name = layer.name(); 
+	layer.name = layer.name();
 	layer.adjustFrameToFit();
 }
 
