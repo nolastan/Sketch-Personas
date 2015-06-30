@@ -41,7 +41,7 @@ function getUser() {
 function getUsers(count) {
 	var request = NSMutableURLRequest.new();
 	[request setHTTPMethod:@"GET"];
-	var queryString = "http://api.randomuser.me?nat=us&results=" + count;
+	var queryString = "http://api.randomuser.me?sketch=true&nat=us&results=" + count;
 	[request setURL:[NSURL URLWithString:queryString]];
 
 	var error = NSError.new();
