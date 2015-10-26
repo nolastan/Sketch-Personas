@@ -13,7 +13,7 @@ Select shapes and named text layers to generate a persona:
 
 Select groups to generate multiple personas:
 
-![](http://i.imgur.com/OUgrYmp.gif)
+![](https://d13yacurqjgara.cloudfront.net/users/42731/screenshots/2298626/ezgif-783276486.gif)
 
 ## Supported Layer Names
 Data comes from [RandomAPI](https://randomuser.me/).
