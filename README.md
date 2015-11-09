@@ -17,6 +17,8 @@ Select groups to generate multiple personas:
 
 (gif created with [Generate GIF plugin](https://github.com/nathco/generate-gif))
 
+Note that the plugin will react based on the **layer's name**, not its text content.
+
 ## Supported Layer Names
 Data comes from [RandomAPI](https://randomuser.me/).
 
