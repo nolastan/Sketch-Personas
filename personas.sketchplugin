@@ -22,7 +22,6 @@ function updateGroups(groups) {
 }
 
 function updateLayers(layers, user) {
-
 	for (var i=0; i < layers.count(); i++) {
 		var layer = layers[i];
 		if (layer.className() == 'MSShapeGroup') {
@@ -35,7 +34,7 @@ function updateLayers(layers, user) {
 }
 
 function getUser() {
-	return getUsers(1)[0].user;
+	return getUsers(1)[0];
 }
 
 function getUsers(count) {
@@ -50,7 +49,6 @@ function getUsers(count) {
 	var oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:responseCode error:error];
 
 	var dataString = [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-
 	var data = JSON.parse(dataString);
 
 	return data.results;
