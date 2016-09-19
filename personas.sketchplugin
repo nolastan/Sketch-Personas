@@ -67,10 +67,12 @@ function setImage(layer, user) {
 
 	var imageURLString = user.picture[size];
 	var url = [[NSURL alloc] initWithString: imageURLString];
-	var image = [[NSImage alloc] initByReferencingURL:url];
+	var imageData = [[NSImage alloc] initByReferencingURL:url];
 	var fill = layer.style().fills().firstObject();
 
-	layer.style().fills().firstObject().setPatternImage(image);
+  var image = [[MSImageData alloc] initWithImage: imageData convertColorSpace: false]]
+
+	layer.style().fills().firstObject().setImage(image);
 	layer.style().fills().firstObject().setPatternFillType(PATTERN_FILL_IMAGE);
 	fill.setFillType(FILL_TYPE_FILL);
 }
